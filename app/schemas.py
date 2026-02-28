@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Dict
 
 
 class BatchInput(BaseModel):
@@ -10,3 +11,9 @@ class BatchInput(BaseModel):
     Machine_Speed: float
     Lubricant_Conc: float
     Moisture_Content: float
+
+
+class PredictionResponse(BaseModel):
+    predictions: Dict[str, float]
+    inference_time_ms: float
+    model_version: str

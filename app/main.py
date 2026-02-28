@@ -18,14 +18,8 @@ def health_check():
 @app.post("/predict", response_model=PredictionResponse)
 def predict_batch(batch: BatchInput):
     try:
-        predictions, intervals, inference_time = BatchPredictor.predict(batch.dict())
-
-        return PredictionResponse(
-            predictions=predictions,
-            prediction_intervals=intervals,
-            inference_time_ms=round(inference_time, 2),
-            model_version=API_VERSION,
-        )
+        result = BatchPredictor.predict(batch.dict())
+        return result
 
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
