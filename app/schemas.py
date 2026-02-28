@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Dict
 
+
 class BatchInput(BaseModel):
     Drying_Temp: float = Field(..., gt=0)
     Drying_Time: float = Field(..., gt=0)
@@ -10,6 +11,7 @@ class BatchInput(BaseModel):
     Flow_Rate_LPM: float
     Motor_Speed_RPM: float
     Vibration_mm_s: float
+
 
 class PredictionResponse(BaseModel):
     predictions: Dict[str, float]

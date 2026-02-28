@@ -1,7 +1,8 @@
-import numpy as np
 import pandas as pd
 import time
 from app.model_loader import model_loader
+from app.utils import timing_decorator
+
 
 class BatchPredictor:
 
@@ -9,9 +10,10 @@ class BatchPredictor:
     def preprocess(data_dict):
         df = pd.DataFrame([data_dict])
 
-        # Feature Engineering
         df["Drying_Energy_Index"] = df["Drying_Temp"] * df["Drying_Time"]
-        df["Compression_Power"] = df["Compression_Force"] * df["Machine_Speed"]
+        df["Compression_Power"] = (
+            df["Compression_Force"] * df["Machine_Speed"]
+        )
         df["Binder_Amount_Squared"] = df["Binder_Amount"] ** 2
 
         scaled = model_loader.scaler.transform(df)
@@ -20,6 +22,7 @@ class BatchPredictor:
         return transformed
 
     @staticmethod
+    @timing_decorator
     def predict(data_dict):
         start_time = time.time()
 
@@ -47,10 +50,13 @@ class BatchPredictor:
     @staticmethod
     def compute_intervals(predictions):
         intervals = {}
+
         for key, value in predictions.items():
-            margin = 0.05 * value  # 5% interval placeholder
+            margin = 0.05 * value
+
             intervals[key] = {
                 "lower": float(value - margin),
                 "upper": float(value + margin)
             }
+
         return intervals
