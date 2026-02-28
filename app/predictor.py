@@ -1,6 +1,7 @@
 import pandas as pd
 from app.model_loader import model_loader
 
+
 class BatchPredictor:
 
     @staticmethod
@@ -16,5 +17,5 @@ class BatchPredictor:
             "Friability": float(preds[0][2]),
             "Disintegration_Time": float(preds[0][3]),
             "Dissolution_Rate": float(preds[0][4]),
-            "Content_Uniformity": float(preds[0][5])
+            "Content_Uniformity": float(preds[0][5]),
         }
