@@ -11,9 +11,7 @@ class BatchPredictor:
         df = pd.DataFrame([data_dict])
 
         df["Drying_Energy_Index"] = df["Drying_Temp"] * df["Drying_Time"]
-        df["Compression_Power"] = (
-            df["Compression_Force"] * df["Machine_Speed"]
-        )
+        df["Compression_Power"] = df["Compression_Force"] * df["Machine_Speed"]
         df["Binder_Amount_Squared"] = df["Binder_Amount"] ** 2
 
         scaled = model_loader.scaler.transform(df)
@@ -40,7 +38,7 @@ class BatchPredictor:
             "Disintegration_Time": float(quality_preds[0][3]),
             "Dissolution_Rate": float(quality_preds[0][4]),
             "Content_Uniformity": float(quality_preds[0][5]),
-            "Energy_Consumption": float(energy_pred[0])
+            "Energy_Consumption": float(energy_pred[0]),
         }
 
         intervals = BatchPredictor.compute_intervals(results)
@@ -56,7 +54,7 @@ class BatchPredictor:
 
             intervals[key] = {
                 "lower": float(value - margin),
-                "upper": float(value + margin)
+                "upper": float(value + margin),
             }
 
         return intervals

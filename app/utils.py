@@ -16,9 +16,7 @@ ENABLE_FILE_LOGGING = os.getenv("ENABLE_FILE_LOGGING", "false").lower() == "true
 logger = logging.getLogger("AI-Batch-Intelligence")
 logger.setLevel(LOG_LEVEL)
 
-formatter = logging.Formatter(
-    "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
-)
+formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(name)s | %(message)s")
 
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(formatter)
@@ -34,6 +32,7 @@ if ENABLE_FILE_LOGGING:
 # Timing Decorator
 # ==============================
 
+
 def timing_decorator(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
@@ -44,6 +43,7 @@ def timing_decorator(func):
             logger.info(f"{func.__name__} executed in {round(duration, 2)} ms")
 
         return result
+
     return wrapper
 
 
@@ -52,6 +52,7 @@ def timing_decorator(func):
 # ==============================
 
 DRIFT_THRESHOLD = float(os.getenv("DRIFT_THRESHOLD", 0.15))
+
 
 def detect_drift(reference_data, new_data):
     """
@@ -75,6 +76,7 @@ def detect_drift(reference_data, new_data):
 # Input Feature Validation
 # ==============================
 
+
 def validate_numeric_range(value, min_value=None, max_value=None):
     if min_value is not None and value < min_value:
         raise ValueError(f"Value {value} is below allowed minimum {min_value}")
@@ -87,9 +89,7 @@ def validate_numeric_range(value, min_value=None, max_value=None):
 # Safe Error Formatter
 # ==============================
 
+
 def format_exception(e: Exception):
     logger.error(str(e))
-    return {
-        "error_type": type(e).__name__,
-        "message": str(e)
-    }
+    return {"error_type": type(e).__name__, "message": str(e)}

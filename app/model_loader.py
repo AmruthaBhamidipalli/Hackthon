@@ -1,10 +1,5 @@
 import joblib
-from app.config import (
-    QUALITY_MODEL_PATH,
-    ENERGY_MODEL_PATH,
-    SCALER_PATH,
-    PLS_PATH
-)
+from app.config import QUALITY_MODEL_PATH, ENERGY_MODEL_PATH, SCALER_PATH, PLS_PATH
 
 
 class ModelLoader:
