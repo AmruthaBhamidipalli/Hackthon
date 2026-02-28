@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class BatchInput(BaseModel):
     Granulation_Time: float
     Binder_Amount: float
